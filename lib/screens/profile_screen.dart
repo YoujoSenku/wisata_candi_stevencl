@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:wisata_candi_stevencl/providers/favorite_provider.dart';
 import 'package:wisata_candi_stevencl/widgets/profile_info_item.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -13,7 +15,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool isSignedIn = false;
   String fullName = '';
   String userName= '';
-  int favoritCandiCount = 0;
+  int favoriteCandiCount = 0;
 
   // TODO: 5. Implementasi fungsi signIn
   void signIn() {
@@ -31,6 +33,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final favoriteCount =
+        context.watch<FavoriteProvider>().count;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -143,8 +148,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               //favoriteCandiCount
               ProfileInfoItem(
                 icon: Icons.favorite,
-                label: 'Favorit',
-                value: favoritCandiCount > 0 ? '$favoritCandiCount' : '',
+                label: 'favorite',
+                value: favoriteCandiCount > 0 ? '$favoriteCandiCount' : '',
                 iconColor: Colors.red,
               ),
 
@@ -154,7 +159,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               //       children: [
               //         Icon(Icons.favorite, color: Colors.red),
               //         SizedBox(width: 8,),
-              //         Text('Favorit',
+              //         Text('favorite',
               //           style: TextStyle(
               //             fontSize: 18,
               //             fontWeight: FontWeight.bold,
@@ -163,7 +168,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               //       ],
               //     ),
               //     Expanded(
-              //       child: Text(': $favoritCandiCount',
+              //       child: Text(': $favoriteCandiCount',
               //         style: TextStyle(fontSize: 18),
               //       ),
               //     ),

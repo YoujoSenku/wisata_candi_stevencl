@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wisata_candi_stevencl/data/candi_data.dart';
+import 'package:wisata_candi_stevencl/providers/favorite_provider.dart';
 import 'package:wisata_candi_stevencl/screens/detail_screen.dart';
 import 'package:wisata_candi_stevencl/screens/profile_screen.dart';
 import 'package:wisata_candi_stevencl/screens/sign_in_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => FavoriteProvider()),
+          ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ],
+        child: const MyApp(),
+      )
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -31,8 +41,8 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      // home: DetailScreen(candi: candiList[0],),
-      home: SignInScreen(),
+      home: DetailScreen(candi: candiList[0],),
+      // home: SignInScreen(),
     );
   }
 }
