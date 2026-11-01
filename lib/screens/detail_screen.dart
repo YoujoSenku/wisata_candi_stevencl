@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
 import 'package:wisata_candi_stevencl/models/candi.dart';
 import 'package:wisata_candi_stevencl/providers/favorite_provider.dart';
+import 'package:wisata_candi_stevencl/screens/profile_screen.dart';
 
 class DetailScreen extends StatelessWidget {
   final Candi candi;
@@ -44,7 +45,9 @@ class DetailScreen extends StatelessWidget {
                       shape: BoxShape.circle,
                     ),
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                          Navigator.pop(context);
+                        },
                       icon: const Icon(Icons.arrow_back),
                     ),
                   ),
@@ -72,7 +75,7 @@ class DetailScreen extends StatelessWidget {
                       ),
                       IconButton(
                         onPressed: () {
-                          context.read()<FavoriteProvider>().toggle(candi.name);
+                          context.read<FavoriteProvider>().toggle(candi.name);
                         },
                         icon: Icon(
                           isFav ? Icons.favorite : Icons.favorite_border,
@@ -165,6 +168,17 @@ class DetailScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => const ProfileScreen()
+                ),
+            );
+          },
+        child: const Icon(Icons.person),
       ),
     );
   }

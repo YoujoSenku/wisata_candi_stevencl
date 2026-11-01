@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wisata_candi_stevencl/data/candi_data.dart';
+import 'package:wisata_candi_stevencl/providers/auth_provider.dart';
 import 'package:wisata_candi_stevencl/providers/favorite_provider.dart';
 import 'package:wisata_candi_stevencl/screens/detail_screen.dart';
 import 'package:wisata_candi_stevencl/screens/profile_screen.dart';

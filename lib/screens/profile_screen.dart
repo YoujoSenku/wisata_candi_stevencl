@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wisata_candi_stevencl/providers/auth_provider.dart';
 import 'package:wisata_candi_stevencl/providers/favorite_provider.dart';
+import 'package:wisata_candi_stevencl/screens/sign_in_screen.dart';
 import 'package:wisata_candi_stevencl/widgets/profile_info_item.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -12,29 +14,29 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   // TODO: 1. Deklarasikan variabel yang dibutuhkan
-  bool isSignedIn = false;
-  String fullName = '';
-  String userName= '';
-  int favoriteCandiCount = 0;
+  // bool isSignedIn = false;
+  // String fullName = '';
+  // String userName= '';
+  // int favoriteCandiCount = 0;
 
   // TODO: 5. Implementasi fungsi signIn
-  void signIn() {
-    setState(() {
-      isSignedIn = !isSignedIn;
-    });
-  }
+  // void signIn() {
+  //   setState(() {
+  //     isSignedIn = !isSignedIn;
+  //   });
+  // }
 
   // TODO: 6. Implementasi fungsi signOut
-  void signOut() {
-    setState(() {
-      isSignedIn = !isSignedIn;
-    });
-  }
+  // void signOut() {
+  //   setState(() {
+  //     isSignedIn = !isSignedIn;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
-    final favoriteCount =
-        context.watch<FavoriteProvider>().count;
+    final favoriteCount = context.watch<FavoriteProvider>().count;
+    final auth = context.watch<AuthProvider>();
 
     return Scaffold(
       body: Stack(
@@ -67,7 +69,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             backgroundImage: AssetImage('images/placeholder_image.png'),
                         ),
                       ),
-                      if (isSignedIn)
+                      if (auth.isSignedIn)
                         IconButton(
                           onPressed: () {},
                           icon: Icon(
@@ -87,7 +89,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ProfileInfoItem(
                 icon: Icons.lock,
                 label: 'Pengguna',
-                value: userName,
+                value: auth.isSignedIn ? auth.username : '',
                 iconColor: Colors.amber,
               ),
 
@@ -117,8 +119,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ProfileInfoItem(
                 icon: Icons.person,
                 label: 'Nama',
-                value: fullName,
-                showEditIcon: isSignedIn,
+                value: auth.isSignedIn ? auth.username : '',
+                showEditIcon: auth.isSignedIn,
                 onEditPressed: () => debugPrint('Icon edit ditekan'),
                 iconColor: Colors.blue,
               ),
@@ -149,7 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ProfileInfoItem(
                 icon: Icons.favorite,
                 label: 'favorite',
-                value: favoriteCandiCount > 0 ? '$favoriteCandiCount' : '',
+                value: favoriteCount > 0 ? '$favoriteCount' : '',
                 iconColor: Colors.red,
               ),
 
@@ -178,10 +180,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const SizedBox(height: 4),
               Divider(color: Colors.deepPurple[100]),
               const SizedBox(height: 20),
-              isSignedIn
-                  ? TextButton(onPressed: signOut, child: const Text('Sign Out'))
-                  : TextButton(onPressed: signIn, child: const Text('Sign In')),
-
+              auth.isSignedIn
+                  ? TextButton(onPressed: () => context.read<AuthProvider>().signOut(), child: const Text('Sign Out'))
+                  : TextButton(onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => SignInScreen()),
+                    );
+                  },
+                  child: const Text('Sign In')
+              ),
             ],
           ),
         ],
