@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wisata_candi_stevencl/data/candi_data.dart';
 import 'package:wisata_candi_stevencl/models/candi.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -10,7 +11,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   // TODO: 1. Deklarasikan variabel yang dibutuhkan
-  List<Candi> _filteredCandis = [];
+  List<Candi> _filteredCandis = candiList;
   String _searchQuery = '';
   final TextEditingController _searchController = TextEditingController();
 
@@ -18,7 +19,7 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // TODO: 2. Buat appbar dengan judul Pencarian Candi
-      appBar: AppBar(title: Text('Pencarian Candi'),),
+      appBar: AppBar(title: Text('Pencarian Candi')),
       // TODO: 3. Buat body berupa Column
       body: Column(
         children: [
@@ -36,7 +37,9 @@ class _SearchScreenState extends State<SearchScreen> {
                   hintText: 'Cari Candi ...',
                   prefixIcon: Icon(Icons.search),
                   border: InputBorder.none,
-                  focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.deepPurple)),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.deepPurple),
+                  ),
                   contentPadding: EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 12,
@@ -46,10 +49,51 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
           ),
           // TODO: 5. Buat ListView hasil pencarian sebagai anak dari Column
-          ListView(),
+          Expanded(
+            child: ListView.builder(
+              itemCount: _filteredCandis.length,
+              itemBuilder: (context, index) {
+                final candi = _filteredCandis[index];
+                return Card(
+                  margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(8),
+                        width: 100,
+                        height: 100,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.asset(
+                            candi.imageAsset, fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(candi.name,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            SizedBox(height: 4,),
+                            Text(candi.location),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
         ],
       ),
-
     );
   }
 }
