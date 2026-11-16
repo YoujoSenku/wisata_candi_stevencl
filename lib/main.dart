@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: SearchScreen(),
+      home: ProfileScreen(),
       // home: DetailScreen(candi: candiList[0],),
       // home: SignInScreen(),
     );
