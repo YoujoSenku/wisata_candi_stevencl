@@ -169,17 +169,17 @@ class DetailScreen extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => const ProfileScreen()
-                ),
-            );
-          },
-        child: const Icon(Icons.person),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //     onPressed: () {
+      //       Navigator.push(
+      //           context,
+      //           MaterialPageRoute(
+      //               builder: (_) => const ProfileScreen()
+      //           ),
+      //       );
+      //     },
+      //   child: const Icon(Icons.person),
+      // ),
     );
   }
 }
